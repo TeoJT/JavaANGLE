@@ -128,10 +128,10 @@ public class TestProgram {
 	    JavaANGLE.glGenBuffers(1, getVBO);
 	    int vbo = getVBO.get(0);
 
-	    JavaANGLE.glBindBuffer(JavaANGLE.GL_ARRAY_BUFFER, vbo);
-	    JavaANGLE.glBufferData(JavaANGLE.GL_ARRAY_BUFFER, vertices.length*4, data, JavaANGLE.GL_STATIC_DRAW);
 
 	    JavaANGLE.glBindBuffer(JavaANGLE.GL_ARRAY_BUFFER, 0);
+	    
+	    float delta = 0f;
 		
 		while (JavaANGLE.glfwWindowShouldClose(window) == JavaANGLE.FALSE) {
 		    if (JavaANGLE.glfwGetKey(window, JavaANGLE.GLFW_KEY_ESCAPE) == JavaANGLE.GLFW_PRESS) {
@@ -142,8 +142,21 @@ public class TestProgram {
 		    JavaANGLE.glClear(JavaANGLE.GL_COLOR_BUFFER_BIT);
 
 		    JavaANGLE.glUseProgram(shaderProgram);
+		    
+		    float y = (float)Math.sin(delta)*0.2f;
 
 		    JavaANGLE.glBindBuffer(JavaANGLE.GL_ARRAY_BUFFER, vbo);
+		    float movingVertices[] = {
+		        -0.5f, -0.5f+y, 0.0f, 1.0f, 0.0f, 0.0f, // Left bottom
+		         0.5f, -0.5f+y, 0.0f, 0.0f, 1.0f, 0.0f, // Right bottom
+		         0.0f,  0.5f+y, 0.0f, 0.0f, 0.0f, 1.0f, // Top
+		    };
+		    data.rewind();
+		    data.put(movingVertices);
+		    JavaANGLE.glBufferData(JavaANGLE.GL_ARRAY_BUFFER, vertices.length*4, data, JavaANGLE.GL_STATIC_DRAW);
+		    
+		    delta += 0.05;
+		    
 		    JavaANGLE.glVertexAttribPointer(0, 3, JavaANGLE.GL_FLOAT, false, 6 * Float.BYTES, 0);
 		    JavaANGLE.glEnableVertexAttribArray(0);
 		    JavaANGLE.glVertexAttribPointer(1, 3, JavaANGLE.GL_FLOAT, false, 6 * Float.BYTES, 3 * Float.BYTES);

@@ -3624,9 +3624,9 @@ extern "C" {
 	/*
 	 * Class:     javaangle_JavaANGLE
 	 * Method:    glfwGetError
-	 * Signature: ()Ljava/lang/String;
+	 * Signature: ()[Ljava/lang/String;
 	 */
-	JNIEXPORT jstring JNICALL Java_javaangle_JavaANGLE_glfwGetError
+	JNIEXPORT jobjectArray JNICALL Java_javaangle_JavaANGLE_glfwGetError
 	(JNIEnv*, jclass);
 
 	/*
@@ -3652,22 +3652,6 @@ extern "C" {
 	 */
 	JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glfwDefaultWindowHints
 	(JNIEnv*, jclass);
-
-	/*
-	 * Class:     javaangle_JavaANGLE
-	 * Method:    intHint
-	 * Signature: (II)V
-	 */
-	JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_intHint
-	(JNIEnv*, jclass, jint, jint);
-
-	/*
-	 * Class:     javaangle_JavaANGLE
-	 * Method:    intHintString
-	 * Signature: (ILjava/lang/String;)V
-	 */
-	JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_intHintString
-	(JNIEnv*, jclass, jint, jstring);
 
 	/*
 	 * Class:     javaangle_JavaANGLE
@@ -3704,9 +3688,9 @@ extern "C" {
 	/*
 	 * Class:     javaangle_JavaANGLE
 	 * Method:    glfwGetWindowTitle
-	 * Signature: (I)C
+	 * Signature: (I)Ljava/lang/String;
 	 */
-	JNIEXPORT jchar JNICALL Java_javaangle_JavaANGLE_glfwGetWindowTitle
+	JNIEXPORT jstring JNICALL Java_javaangle_JavaANGLE_glfwGetWindowTitle
 	(JNIEnv*, jclass, jint);
 
 	/*
@@ -3727,11 +3711,43 @@ extern "C" {
 
 	/*
 	 * Class:     javaangle_JavaANGLE
+	 * Method:    glfwGetWindowPosX
+	 * Signature: (I)V
+	 */
+	JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glfwGetWindowPosX
+	(JNIEnv*, jclass, jint);
+
+	/*
+	 * Class:     javaangle_JavaANGLE
+	 * Method:    glfwGetWindowPosY
+	 * Signature: (I)V
+	 */
+	JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glfwGetWindowPosY
+	(JNIEnv*, jclass, jint);
+
+	/*
+	 * Class:     javaangle_JavaANGLE
 	 * Method:    glfwSetWindowPos
 	 * Signature: (III)V
 	 */
 	JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glfwSetWindowPos
 	(JNIEnv*, jclass, jint, jint, jint);
+
+	/*
+	 * Class:     javaangle_JavaANGLE
+	 * Method:    glfwGetWindowWidth
+	 * Signature: (I)V
+	 */
+	JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glfwGetWindowWidth
+	(JNIEnv*, jclass, jint);
+
+	/*
+	 * Class:     javaangle_JavaANGLE
+	 * Method:    glfwGetWindowHeight
+	 * Signature: (I)V
+	 */
+	JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glfwGetWindowHeight
+	(JNIEnv*, jclass, jint);
 
 	/*
 	 * Class:     javaangle_JavaANGLE
@@ -3803,6 +3819,30 @@ extern "C" {
 	 * Signature: (I)I
 	 */
 	JNIEXPORT jint JNICALL Java_javaangle_JavaANGLE_glfwGetWindowFrameBottom
+	(JNIEnv*, jclass, jint);
+
+	/*
+	 * Class:     javaangle_JavaANGLE
+	 * Method:    glfwGetWindowContentScaleX
+	 * Signature: (I)V
+	 */
+	JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glfwGetWindowContentScaleX
+	(JNIEnv*, jclass, jint);
+
+	/*
+	 * Class:     javaangle_JavaANGLE
+	 * Method:    glfwGetWindowContentScaleY
+	 * Signature: (I)V
+	 */
+	JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glfwGetWindowContentScaleY
+	(JNIEnv*, jclass, jint);
+
+	/*
+	 * Class:     javaangle_JavaANGLE
+	 * Method:    glfwGetWindowOpacity
+	 * Signature: (I)F
+	 */
+	JNIEXPORT jfloat JNICALL Java_javaangle_JavaANGLE_glfwGetWindowOpacity
 	(JNIEnv*, jclass, jint);
 
 	/*
@@ -3900,6 +3940,22 @@ extern "C" {
 	 */
 	JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glfwSetWindowAttrib
 	(JNIEnv*, jclass, jint, jint, jint);
+
+	/*
+	 * Class:     javaangle_JavaANGLE
+	 * Method:    glfwSetWindowUserPointer
+	 * Signature: (ILjava/nio/Buffer;)V
+	 */
+	JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glfwSetWindowUserPointer
+	(JNIEnv*, jclass, jint, jobject);
+
+	/*
+	 * Class:     javaangle_JavaANGLE
+	 * Method:    glfwGetWindowUserPointer
+	 * Signature: (I)Ljava/nio/Buffer;
+	 */
+	JNIEXPORT jobject JNICALL Java_javaangle_JavaANGLE_glfwGetWindowUserPointer
+	(JNIEnv*, jclass, jint);
 
 	/*
 	 * Class:     javaangle_JavaANGLE
@@ -6896,18 +6952,18 @@ extern "C" {
 	/*
 	 * Class:     javaangle_JavaANGLE
 	 * Method:    glGetActiveAttrib
-	 * Signature: (IIILjava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/lang/String;)V
+	 * Signature: (IILjava/nio/IntBuffer;Ljava/nio/IntBuffer;)Ljava/lang/String;
 	 */
-	JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glGetActiveAttrib
-	(JNIEnv*, jclass, jint, jint, jint, jobject, jobject, jobject, jstring);
+	JNIEXPORT jstring JNICALL Java_javaangle_JavaANGLE_glGetActiveAttrib
+	(JNIEnv*, jclass, jint, jint, jobject, jobject);
 
 	/*
 	 * Class:     javaangle_JavaANGLE
 	 * Method:    glGetActiveUniform
-	 * Signature: (IIILjava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;Ljava/lang/String;)V
+	 * Signature: (IILjava/nio/IntBuffer;Ljava/nio/IntBuffer;)Ljava/lang/String;
 	 */
-	JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glGetActiveUniform
-	(JNIEnv*, jclass, jint, jint, jint, jobject, jobject, jobject, jstring);
+	JNIEXPORT jstring JNICALL Java_javaangle_JavaANGLE_glGetActiveUniform
+	(JNIEnv*, jclass, jint, jint, jobject, jobject);
 
 	/*
 	 * Class:     javaangle_JavaANGLE
@@ -7024,10 +7080,10 @@ extern "C" {
 	/*
 	 * Class:     javaangle_JavaANGLE
 	 * Method:    glGetShaderSource
-	 * Signature: (IILjava/nio/IntBuffer;Ljava/lang/String;)V
+	 * Signature: (I)Ljava/lang/String;
 	 */
-	JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glGetShaderSource
-	(JNIEnv*, jclass, jint, jint, jobject, jstring);
+	JNIEXPORT jstring JNICALL Java_javaangle_JavaANGLE_glGetShaderSource
+	(JNIEnv*, jclass, jint);
 
 	/*
 	 * Class:     javaangle_JavaANGLE
@@ -8136,42 +8192,42 @@ extern "C" {
 	/*
 	 * Class:     javaangle_JavaANGLE
 	 * Method:    glFenceSync
-	 * Signature: (II)I
+	 * Signature: (II)J
 	 */
-	JNIEXPORT jint JNICALL Java_javaangle_JavaANGLE_glFenceSync
+	JNIEXPORT jlong JNICALL Java_javaangle_JavaANGLE_glFenceSync
 	(JNIEnv*, jclass, jint, jint);
 
 	/*
 	 * Class:     javaangle_JavaANGLE
 	 * Method:    glIsSync
-	 * Signature: (I)Z
+	 * Signature: (J)Z
 	 */
 	JNIEXPORT jboolean JNICALL Java_javaangle_JavaANGLE_glIsSync
-	(JNIEnv*, jclass, jint);
+	(JNIEnv*, jclass, jlong);
 
 	/*
 	 * Class:     javaangle_JavaANGLE
 	 * Method:    glDeleteSync
-	 * Signature: (I)V
+	 * Signature: (J)V
 	 */
 	JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glDeleteSync
-	(JNIEnv*, jclass, jint);
+	(JNIEnv*, jclass, jlong);
 
 	/*
 	 * Class:     javaangle_JavaANGLE
 	 * Method:    glClientWaitSync
-	 * Signature: (IIJ)I
+	 * Signature: (JIJ)I
 	 */
 	JNIEXPORT jint JNICALL Java_javaangle_JavaANGLE_glClientWaitSync
-	(JNIEnv*, jclass, jint, jint, jlong);
+	(JNIEnv*, jclass, jlong, jint, jlong);
 
 	/*
 	 * Class:     javaangle_JavaANGLE
 	 * Method:    glWaitSync
-	 * Signature: (IIJ)V
+	 * Signature: (JIJ)V
 	 */
 	JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glWaitSync
-	(JNIEnv*, jclass, jint, jint, jlong);
+	(JNIEnv*, jclass, jlong, jint, jlong);
 
 	/*
 	 * Class:     javaangle_JavaANGLE
@@ -8184,10 +8240,10 @@ extern "C" {
 	/*
 	 * Class:     javaangle_JavaANGLE
 	 * Method:    glGetSynciv
-	 * Signature: (IIILjava/nio/IntBuffer;Ljava/nio/IntBuffer;)V
+	 * Signature: (JIILjava/nio/IntBuffer;Ljava/nio/IntBuffer;)V
 	 */
 	JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glGetSynciv
-	(JNIEnv*, jclass, jint, jint, jint, jobject, jobject);
+	(JNIEnv*, jclass, jlong, jint, jint, jobject, jobject);
 
 	/*
 	 * Class:     javaangle_JavaANGLE

@@ -578,7 +578,7 @@ public class JavaANGLE {
 
     public static native String glfwGetVersionString();
 
-    public static native String glfwGetError();
+    public static native String[] glfwGetError();
 
     //public static native GLFWerrorfun glfwSetErrorCallback(GLFWerrorfun callback);
 
@@ -636,12 +636,6 @@ public class JavaANGLE {
     public static native void glfwDefaultWindowHints();
 
 
-    public static native void intHint(int hint, int value);
-
-
-    public static native void intHintString(int hint, String value);
-
-
     public static native int glfwCreateWindow(int width, int height, String title, GLFWmonitor monitor, int share);
 
 
@@ -654,7 +648,7 @@ public class JavaANGLE {
     public static native void glfwSetWindowShouldClose(int window, int value);
 
 
-    public static native char glfwGetWindowTitle(int window);
+    public static native String glfwGetWindowTitle(int window);
 
 
     public static native void glfwSetWindowTitle(int window, String title);
@@ -663,13 +657,15 @@ public class JavaANGLE {
     public static native void glfwSetWindowIcon(int window, int count, GLFWimage images);
 
 
-    // public static native void glfwGetWindowPos(int window, int xpos, int ypos);
+     public static native void glfwGetWindowPosX(int window);
+     public static native void glfwGetWindowPosY(int window);
 
 
     public static native void glfwSetWindowPos(int window, int xpos, int ypos);
 
 
-    // public static native void glfwGetWindowSize(int window, int* width, int* height);
+     public static native void glfwGetWindowWidth(int window);
+     public static native void glfwGetWindowHeight(int window);
 
 
     public static native void glfwSetWindowSizeLimits(int window, int minwidth, int minheight, int maxwidth, int maxheight);
@@ -688,16 +684,12 @@ public class JavaANGLE {
     public static native int glfwGetWindowFrameRight(int window);
     public static native int glfwGetWindowFrameBottom(int window);
 
-    // public static native void glfwGetFramebufferSize(int* window, int* width, int* height);
+
+     public static native void glfwGetWindowContentScaleX(int window);
+     public static native void glfwGetWindowContentScaleY(int window);
 
 
-    // public static native void glfwGetWindowFrameSize(int* window, int* left, int* top, int* right, int* bottom);
-
-
-    // public static native void glfwGetWindowContentScale(int* window, float* xscale, float* yscale);
-
-
-    // public static native float glfwGetWindowOpacity(int* window);
+     public static native float glfwGetWindowOpacity(int window);
 
 
     public static native void glfwSetWindowOpacity(int window, float opacity);
@@ -736,10 +728,10 @@ public class JavaANGLE {
     public static native void glfwSetWindowAttrib(int window, int attrib, int value);
 
 
-    // public static native void glfwSetWindowUserPointer(int window, void pointer);
+     public static native void glfwSetWindowUserPointer(int window, Buffer pointer);
 
 
-    // public static native void* glfwGetWindowUserPointer(int* window);
+     public static native Buffer glfwGetWindowUserPointer(int window);
 
 
     // public static native intposfun glfwSetWindowPosCallback(int* window, intposfun callback);
@@ -2753,8 +2745,8 @@ public class JavaANGLE {
     public static native void glGenFramebuffers (int n, IntBuffer framebuffers);
     public static native void glGenRenderbuffers (int n, IntBuffer renderbuffers);
     public static native void glGenTextures (int n, IntBuffer textures);
-    public static native void glGetActiveAttrib (int program, int index, int bufSize, IntBuffer length, IntBuffer size, IntBuffer type, String name);
-    public static native void glGetActiveUniform (int program, int index, int bufSize, IntBuffer length, IntBuffer size, IntBuffer type, String name);
+    public static native String glGetActiveAttrib (int program, int index, IntBuffer size, IntBuffer type);
+    public static native String glGetActiveUniform (int program, int index, IntBuffer size, IntBuffer type);
     public static native void glGetAttachedShaders (int program, int maxCount, IntBuffer count, IntBuffer shaders);
     public static native int glGetAttribLocation (int program, String name);
     public static native void glGetBooleanv (int pname, IntBuffer data);
@@ -2769,7 +2761,7 @@ public class JavaANGLE {
     public static native void glGetShaderiv (int shader, int pname, IntBuffer params);
     public static native String glGetShaderInfoLog (int shader);
     public static native void glGetShaderPrecisionFormat (int shadertype, int precisiontype, IntBuffer range, IntBuffer precision);
-    public static native void glGetShaderSource (int shader, int bufSize, IntBuffer length, String source);
+    public static native String glGetShaderSource (int shader);
     public static native String glGetString (int name);
     public static native void glGetTexParameterfv (int target, int pname, FloatBuffer params);
     public static native void glGetTexParameteriv (int target, int pname, IntBuffer params);
@@ -2914,13 +2906,13 @@ public class JavaANGLE {
     public static native void glUniformBlockBinding (int program, int uniformBlockIndex, int uniformBlockBinding);
     public static native void glDrawArraysInstanced (int mode, int first, int count, int instancecount);
     public static native void glDrawElementsInstanced (int mode, int count, int type, Buffer indices, int instancecount);
-    public static native int glFenceSync (int condition, int flags);
-    public static native boolean glIsSync (int sync);
-    public static native void glDeleteSync (int sync);
-    public static native int glClientWaitSync (int sync, int flags, long timeout);
-    public static native void glWaitSync (int sync, int flags, long timeout);
+    public static native long glFenceSync (int condition, int flags);
+    public static native boolean glIsSync (long sync);
+    public static native void glDeleteSync (long sync);
+    public static native int glClientWaitSync (long sync, int flags, long timeout);
+    public static native void glWaitSync (long sync, int flags, long timeout);
     public static native void glGetInteger64v (int pname, LongBuffer data);
-    public static native void glGetSynciv (int sync, int pname, int bufSize, IntBuffer length, IntBuffer values);
+    public static native void glGetSynciv (long sync, int pname, int bufSize, IntBuffer length, IntBuffer values);
     public static native void glGetInteger64i_v (int target, int index, LongBuffer data);
     public static native void glGetBufferParameteri64v (int target, int pname, LongBuffer params);
     public static native void glGenSamplers (int count, IntBuffer samplers);
