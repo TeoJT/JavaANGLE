@@ -4,5 +4,6 @@
 /**
  * 
  */
-module JavaANGLEJNI {
+module javaangle {
+	exports javaangle;
 }

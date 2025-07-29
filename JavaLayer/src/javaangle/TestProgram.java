@@ -5,7 +5,7 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
-public class TestProgram {
+class TestProgram {
 	
 	static final String vertexShaderSource = "#version 320 es\n"+
 			"in vec3 aPos;\n"+

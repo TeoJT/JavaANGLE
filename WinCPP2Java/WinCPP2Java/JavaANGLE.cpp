@@ -155,7 +155,7 @@ JNIEXPORT jstring JNICALL Java_javaangle_JavaANGLE_glfwGetVersionString
 // TODO: Have no idea if this works, give it a proper test.
 JNIEXPORT jobjectArray JNICALL Java_javaangle_JavaANGLE_glfwGetError
 (JNIEnv* env, jclass) {
-	char** strs;
+	const char** strs = new const char* [128];
 
 	glfwGetError(strs);
 
@@ -285,7 +285,7 @@ JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glfwSetClipboardString
 
 JNIEXPORT jstring JNICALL Java_javaangle_JavaANGLE_glfwGetClipboardString
 (JNIEnv* env, jclass, jint window) {
-	if (!checkWindow(window)) return;
+	if (!checkWindow(window)) return env->NewStringUTF("");
 
 	return getString(env, glfwGetClipboardString(glfwwindows[window]));
 }
@@ -327,7 +327,7 @@ JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glfwSwapInterval
 
 JNIEXPORT jint JNICALL Java_javaangle_JavaANGLE_glfwExtensionSupported
 (JNIEnv* env, jclass, jstring extension) {
-	glfwExtensionSupported(env->GetStringUTFChars(extension, nullptr));
+	return glfwExtensionSupported(env->GetStringUTFChars(extension, nullptr));
 }
 
 JNIEXPORT jint JNICALL Java_javaangle_JavaANGLE_glfwVulkanSupported
@@ -408,12 +408,6 @@ JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glShaderSource
 JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glCompileShader
 (JNIEnv*, jclass, jint shader) {
 	glCompileShader(shader);
-}
-
-JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glGetShaderiv
-(JNIEnv* env, jclass, jint shader, jint pname, jobject params) {
-	int* ptr = (int*)env->GetDirectBufferAddress(params);
-	glGetShaderiv(shader, pname, ptr);
 }
 
 JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glGetProgramiv
@@ -673,7 +667,7 @@ JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glValidateProgram
 
 JNIEXPORT jboolean JNICALL Java_javaangle_JavaANGLE_glIsShader
 (JNIEnv*, jclass, jint shader) {
-	glIsShader(shader);
+	return (jboolean)glIsShader(shader);
 }
 
 JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glGetShaderiv
@@ -689,8 +683,8 @@ JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glScissor
 JNIEXPORT jstring JNICALL Java_javaangle_JavaANGLE_glGetShaderSource
 (JNIEnv* env, jclass, jint shader) {
 	char* str = new char[30000];
-	int* len;
-	glGetShaderSource(shader, 30000, len, str);
+	int len = 0;
+	glGetShaderSource(shader, 30000, &len, str);
 	jstring ret = getString(env, str);
 	delete[] str;
 	return ret;
@@ -718,7 +712,7 @@ JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glMapBufferRange
 
 JNIEXPORT jboolean JNICALL Java_javaangle_JavaANGLE_glUnmapBuffer
 (JNIEnv*, jclass, jint target) {
-	glUnmapBuffer(target);
+	return (jboolean)glUnmapBuffer(target);
 }
 
 JNIEXPORT jlong JNICALL Java_javaangle_JavaANGLE_glFenceSync
@@ -733,7 +727,7 @@ JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glDeleteSync
 
 JNIEXPORT jint JNICALL Java_javaangle_JavaANGLE_glClientWaitSync
 (JNIEnv*, jclass, jlong sync, jint flags, jlong timeout) {
-	glClientWaitSync((GLsync)sync, flags, timeout);
+	return (jint)glClientWaitSync((GLsync)sync, flags, timeout);
 }
 
 JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glDepthRangef
@@ -834,6 +828,6 @@ JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glGenerateMipmap
 
 JNIEXPORT jboolean JNICALL Java_javaangle_JavaANGLE_glIsTexture
 (JNIEnv*, jclass, jint texture) {
-	glIsTexture(texture);
+	return glIsTexture(texture);
 }
 

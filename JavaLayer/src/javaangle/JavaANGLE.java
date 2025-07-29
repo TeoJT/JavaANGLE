@@ -2,6 +2,7 @@ package javaangle;
 
 import java.nio.IntBuffer;
 import java.nio.FloatBuffer;
+import java.io.File;
 import java.nio.Buffer;
 import java.nio.ShortBuffer;
 import java.nio.LongBuffer;
@@ -11,8 +12,30 @@ import java.nio.DoubleBuffer;
 public class JavaANGLE {
 
     static {
-    	String userDirectory = System.getProperty("user.dir").replaceAll("\\\\", "/");
-        System.load(userDirectory+"/dll/WinCPP2Java.dll");
+    	final String dll = "WinCPP2Java.dll";
+    	// Find local dir first.
+        String thisJavaFile = JavaANGLE.class.getProtectionDomain().getCodeSource().getLocation().getPath().replaceAll("\\\\", "/");
+        try {
+            if (thisJavaFile.charAt(0) == '/') thisJavaFile = thisJavaFile.substring(1);
+        	thisJavaFile = thisJavaFile.substring(0, thisJavaFile.lastIndexOf("/", thisJavaFile.length()-2));
+        }
+        catch (StringIndexOutOfBoundsException e) {
+        	thisJavaFile = "failed/to/get/path";
+        }
+        
+    	File f = new File("dll/"+dll);
+    	
+        System.out.println(thisJavaFile);
+        if (f.exists()) {
+        	// Load local
+        	System.load(f.getAbsolutePath());
+        	System.out.println("Loaded "+f.getAbsolutePath());
+        }
+        else {
+//            f = new File(thisJavaFile+dll);
+        	System.load(thisJavaFile+"/"+dll);
+        	System.out.println("Loaded "+thisJavaFile+"/"+dll);
+        }
     }
 
   
