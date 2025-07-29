@@ -478,8 +478,7 @@ JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glBindBuffer
 
 JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glBufferData
 (JNIEnv* env, jclass, jint target, jint size, jobject data, jint usage) {
-	uint32_t* ptr = (uint32_t*)env->GetDirectBufferAddress(data);
-	glBufferData(target, size, ptr, usage);
+	glBufferData((int)target, (int)size, (void*)env->GetDirectBufferAddress(data), (int)usage);
 }
 
 JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glClearColor
@@ -831,3 +830,150 @@ JNIEXPORT jboolean JNICALL Java_javaangle_JavaANGLE_glIsTexture
 	return glIsTexture(texture);
 }
 
+JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glGetTexParameterfv
+(JNIEnv* env, jclass, jint target, jint pname, jobject params) {
+	glGetTexParameterfv(target, pname, (float*)env->GetDirectBufferAddress(params));
+}
+
+JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glGetTexParameteriv
+(JNIEnv* env, jclass, jint target, jint pname, jobject params) {
+	glGetTexParameteriv(target, pname, (int*)env->GetDirectBufferAddress(params));
+}
+
+JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glTexParameterf
+(JNIEnv*, jclass, jint target, jint pname, jfloat param) {
+	glTexParameterf(target, pname, param);
+}
+
+JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glTexParameteri
+(JNIEnv*, jclass, jint target, jint pname, jint param) {
+	glTexParameteri(target, pname, param);
+}
+
+JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glTexParameteriv
+(JNIEnv* env, jclass, jint target, jint pname, jobject params) {
+	glTexParameteriv(target, pname, (int*)env->GetDirectBufferAddress(params));
+}
+
+JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glTexParameterfv
+(JNIEnv* env, jclass, jint target, jint pname, jobject params) {
+	glTexParameterfv(target, pname, (float*)env->GetDirectBufferAddress(params));
+}
+
+JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glActiveTexture
+(JNIEnv*, jclass, jint texture) {
+	glActiveTexture(texture);
+}
+
+JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glBindTexture
+(JNIEnv*, jclass, jint target, jint texture) {
+	glBindTexture(target, texture);
+}
+
+JNIEXPORT jint JNICALL Java_javaangle_JavaANGLE_glGetError
+(JNIEnv*, jclass) {
+	return glGetError();
+}
+
+JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glGetIntegerv
+(JNIEnv* env, jclass, jint value, jobject data) {
+	glGetIntegerv(value, (int*)env->GetDirectBufferAddress(data));
+}
+
+JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glGetFloatv
+(JNIEnv* env, jclass, jint value, jobject data) {
+	glGetFloatv(value, (float*)env->GetDirectBufferAddress(data));
+}
+
+JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glGetBooleanv
+(JNIEnv*, jclass, jint, jobject) {
+
+}
+
+JNIEXPORT jboolean JNICALL Java_javaangle_JavaANGLE_glIsEnabled
+(JNIEnv*, jclass, jint cap) {
+	return (jboolean)glIsEnabled(cap);
+}
+
+JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glLineWidth
+(JNIEnv*, jclass, jfloat width) {
+	glLineWidth(width);
+}
+
+JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glFrontFace
+(JNIEnv*, jclass, jint mode) {
+	glFrontFace(mode);
+}
+
+JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glCullFace
+(JNIEnv*, jclass, jint mode) {
+	glCullFace(mode);
+}
+
+JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glPolygonOffset
+(JNIEnv*, jclass, jfloat factor, jfloat units) {
+	glPolygonOffset(factor, units);
+}
+
+JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glPixelStorei
+(JNIEnv*, jclass, jint pname, jint param) {
+	glPixelStorei(pname, param);
+}
+
+JNIEXPORT jstring JNICALL Java_javaangle_JavaANGLE_glGetActiveAttrib
+(JNIEnv* env, jclass, jint program, jint index, jobject size, jobject type) {
+	int l = 0;
+	int bufSize = 1024;
+	char* name = new char[1024];
+	glGetActiveAttrib(program, index, bufSize, &l, (int*)env->GetDirectBufferAddress(size), (uint32_t*)env->GetDirectBufferAddress(type), name);
+	return getString(env, name);
+}
+
+JNIEXPORT jstring JNICALL Java_javaangle_JavaANGLE_glGetActiveUniform
+(JNIEnv* env, jclass, jint program, jint index, jobject size, jobject type) {
+	int l = 0;
+	int bufSize = 1024;
+	char* name = new char[1024];
+	glGetActiveUniform(program, index, bufSize, &l, (int*)env->GetDirectBufferAddress(size), (uint32_t*)env->GetDirectBufferAddress(type), name);
+	return getString(env, name);
+}
+
+JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glGetAttachedShaders
+(JNIEnv* env, jclass, jint program, jint maxCount, jobject count, jobject shaders) {
+	glGetAttachedShaders(program, maxCount, (int*)env->GetDirectBufferAddress(count), (uint32_t*)env->GetDirectBufferAddress(shaders));
+}
+
+JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glGetShaderPrecisionFormat
+(JNIEnv* env, jclass, jint shadertype, jint precisiontype, jobject range, jobject precision) {
+	glGetShaderPrecisionFormat(shadertype, precisiontype, (int*)env->GetDirectBufferAddress(range), (int*)env->GetDirectBufferAddress(precision));
+}
+
+JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glMatrixMode
+(JNIEnv*, jclass, jint mode) {
+	glMatrixMode(mode);
+}
+
+JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glLoadMatrixf
+(JNIEnv* env, jclass, jobject m) {
+	glLoadMatrixf((float*)env->GetDirectBufferAddress(m));
+}
+
+//JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glLoadMatrixd
+//(JNIEnv* env, jclass, jobject m) {
+//	glLoadMatrixd((double*)env->GetDirectBufferAddress(m));
+//}
+
+JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glFlush
+(JNIEnv*, jclass) {
+	glFlush();
+}
+
+JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glFinish
+(JNIEnv*, jclass) {
+	glFinish();
+}
+
+JNIEXPORT void JNICALL Java_javaangle_JavaANGLE_glHint
+(JNIEnv*, jclass, jint target, jint mode) {
+	glHint(target, mode);
+}

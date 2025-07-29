@@ -1,20 +1,20 @@
 package javaangle;
 
-import java.nio.IntBuffer;
-import java.nio.FloatBuffer;
 import java.io.File;
 import java.nio.Buffer;
-import java.nio.ShortBuffer;
-import java.nio.LongBuffer;
 import java.nio.ByteBuffer;
 import java.nio.DoubleBuffer;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+import java.nio.LongBuffer;
+import java.nio.ShortBuffer;
 
-public class JavaANGLE {
+public class GL {
 
     static {
     	final String dll = "WinCPP2Java.dll";
     	// Find local dir first.
-        String thisJavaFile = JavaANGLE.class.getProtectionDomain().getCodeSource().getLocation().getPath().replaceAll("\\\\", "/");
+        String thisJavaFile = GL.class.getProtectionDomain().getCodeSource().getLocation().getPath().replaceAll("\\\\", "/");
         try {
             if (thisJavaFile.charAt(0) == '/') thisJavaFile = thisJavaFile.substring(1);
         	thisJavaFile = thisJavaFile.substring(0, thisJavaFile.lastIndexOf("/", thisJavaFile.length()-2));
@@ -2473,7 +2473,7 @@ public class JavaANGLE {
     public static native void glCopyTexImage1D (int target, int level, int internalFormat, int x, int y, int width, int border);
     public static native void glCopyTexSubImage1D (int target, int level, int xoffset, int x, int y, int width);
     public static native void glDeleteLists (int list, int range);
-    public static native void glDepthRange (int zNear, int zFar);
+    public static native void glDepthRange (float zNear, float zFar);
     public static native void glDisableClientState (int array);
     public static native void glDrawBuffer (int mode);
     public static native void glDrawPixels (int width, int height, int format, int type, Buffer pixels);
@@ -2755,7 +2755,7 @@ public class JavaANGLE {
     public static native void glDisable (int cap);
     public static native void glDisableVertexAttribArray (int index);
     public static native void glDrawArrays (int mode, int first, int count);
-    public static native void glDrawElements (int mode, int count, int type, Buffer indices);
+    public static native void glDrawElements (int mode, int count, int type, Buffer indices, int offset);
     public static native void glEnable (int cap);
     public static native void glEnableVertexAttribArray (int index);
     public static native void glFinish ();
@@ -2885,7 +2885,7 @@ public class JavaANGLE {
     public static native void glBlitFramebuffer (int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, int mask, int filter);
     public static native void glRenderbufferStorageMultisample (int target, int samples, int internalformat, int width, int height);
     public static native void glFramebufferTextureLayer (int target, int attachment, int texture, int level, int layer);
-    public static native void glMapBufferRange (int target, int offset, int length, int access);
+    public static native ByteBuffer glMapBufferRange (int target, int offset, int length, int access);
     public static native void glFlushMappedBufferRange (int target, int offset, int length);
     public static native void glBindVertexArray (int array);
     public static native void glDeleteVertexArrays (int n, IntBuffer arrays);
